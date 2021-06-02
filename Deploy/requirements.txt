@@ -1,0 +1,4 @@
+tensorflow==2.5.0rc3
+numpy==1.19.5
+flask==2.0.1
+sklearn==0.0
