@@ -70,16 +70,16 @@ def smoke(value) :
 
 def predictvalue(predict_file) :
     predict = []
-    jk = gender(predict_file[0][0])
-    age = predict_file[0][1]
-    hip = rb(predict_file[0][2])
-    heart = rb(predict_file[0][3])
-    nikah = rb(predict_file[0][4])
-    rumah = tinggal(predict_file[0][5])
-    bmi = BMI(predict_file[0][6],predict_file[0][7])
-    tipe = work_type(predict_file[0][8])
-    glublood = glucose(predict_file[0][9])
-    smokestat = smoke(predict_file[0][10])
+    jk = gender(predict_file.get("gender"))
+    age = float(predict_file.get("age"))
+    hip = rb(predict_file.get("hip"))
+    heart = rb(predict_file.get("heart"))
+    nikah = rb(predict_file.get("married"))
+    rumah = tinggal(predict_file.get("rumah"))
+    bmi = BMI(float(predict_file.get("weight")),float(predict_file.get("height")))
+    tipe = work_type(predict_file.get("work"))
+    glublood = glucose(float(predict_file.get("glu")))
+    smokestat = smoke(predict_file.get("smoke"))
     predict += [jk, age, hip, heart, nikah, rumah, bmi]
     predict.extend(tipe)
     predict.extend(glublood)
@@ -94,37 +94,35 @@ def hello_world ():
 # endpoint for predict with naive bayes algorithm in here we need to input data with json format file
 @app.route("/predictnb", methods=["POST"])
 def predictnb() :
-    request_json = request.json
-    predict_file = request_json.get('data')
+    predict_file = request.form
+    print(predict_file.get('gender'))
     predict_file = predictvalue(predict_file)
     predict_file = np.array(predict_file).reshape(1, len(predict_file))
-    Y_predict = strokeNB.predict(predict_file)
-    hasil = "Beresiko" if Y_predict == 1 else "Tidak beresiko"
-    print('data : {}'.format(request_json))
-    print('type : {}'.format(type(request_json)))
+    Y_predict = modelName.predict(predict_file)
+    hasil = "Beresiko" if Y_predict >.5 else "Kurang beresiko"
+    print('data : {}'.format(predict_file))
+    print('type : {}'.format(type(predict_file)))
     print('Hasil prediksi : '+ str(Y_predict))
     response = {
-        "data" : request_json.get('data'),
-        "Hasil prediksi" : hasil
+        "predict_result" : hasil
     }
     return json.dumps(response)
 
 # endpoint for predict with DNN algortihm in here we need to input data with json format file
 @app.route('/predictdnn', methods=['POST'])
 def predict_dnn ():
-    request_json = request.json
-    predict_file = request_json.get('data')
+    predict_file = request.form
+    print(predict_file.get('gender'))
     predict_file = predictvalue(predict_file)
     predict_file = np.array(predict_file).reshape(1, len(predict_file))
     Y_predict = modelDNN.predict(predict_file)
-    hasil = "Beresiko" if Y_predict >.5 else "Tidak beresiko"
-    print('data : {}'.format(request_json))
-    print('type : {}'.format(type(request_json)))
+    hasil = "Beresiko" if Y_predict >.5 else "Kurang beresiko"
+    print('data : {}'.format(predict_file))
+    print('type : {}'.format(type(predict_file)))
     print('Hasil prediksi : '+ str(Y_predict))
     response = {
-        "data" : request_json.get('data'),
-        "Hasil prediksi" : hasil
+        "predict_result" : hasil
     }
     return json.dumps(response)
 if __name__ == '__main__' :
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
