@@ -1,6 +1,4 @@
-### GCP Build & Deploy
-
-adams-project-313408
+# GCP Build & Deploy
 
 ## Building container image
 
@@ -21,7 +19,7 @@ adams-project-313408
 ## Test Predict at Postman
 
 1. Get Postman at [Postman](https://www.postman.com/downloads/).
-2. Open Postman. Choose `POST` method and enter `<YOUR-SERVICE-URL>/predict_dnn` at URL column. Change `YOUR-SERVICE-URL` with your service URL.
+2. Open Postman. Choose `POST` method and enter `<YOUR-SERVICE-URL>/predictdnn` at URL column. Change `YOUR-SERVICE-URL` with your service URL.
 3. Choose `Body`-->`x-www-form-urlencoded` and enter this Value:Key into the column.
 
 ```gender:Pria
