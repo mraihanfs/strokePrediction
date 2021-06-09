@@ -35,5 +35,5 @@ glu:250
 smoke:Tidak pernah merokok
 ```
 
-4. Then click `Send'.
+4. Then click `Send`.
 5. See the result. The result must be `{"predict_result": "Kurang beresiko"}`.
