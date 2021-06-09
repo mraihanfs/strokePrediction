@@ -1,0 +1,8 @@
+pemerintah, tidak bekerja, pegawai swasta, wirausaha, anak- anak
+10000       01000	   00100	   00010      00001
+
+Sangat Tinggi, Tinggi, Rendah, Normal
+1000	       0100    0010    0001
+
+Tidak diketahui, Mantan perokok, Tidak pernah merokok, Merokok
+1000		 0100		 0010		       0001
